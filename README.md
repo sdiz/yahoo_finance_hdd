@@ -2,7 +2,7 @@
 
 Download historical price, dividends and stock splits data from yahoo finance in python.
 
-- Current Version: v_0.2
+- Current Version: v_0.2.1
 - Version Released: 2019-08-17
 - Report any bugs by opening an issue here: https://github.com/sdiz/yahoo_finance_hdd/issues
 
@@ -84,6 +84,3 @@ splits_df = yf.get_splits(params)
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
 
-## Acknowledgments
-
-- Main library used: https://pypi.org/project/pandas-market-calendars/

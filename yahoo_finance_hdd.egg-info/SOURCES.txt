@@ -1,0 +1,11 @@
+README.md
+setup.cfg
+setup.py
+yahoo_finance_hdd/__init__.py
+yahoo_finance_hdd/exchange_calendars.py
+yahoo_finance_hdd/yahoo_finance.py
+yahoo_finance_hdd.egg-info/PKG-INFO
+yahoo_finance_hdd.egg-info/SOURCES.txt
+yahoo_finance_hdd.egg-info/dependency_links.txt
+yahoo_finance_hdd.egg-info/requires.txt
+yahoo_finance_hdd.egg-info/top_level.txt
