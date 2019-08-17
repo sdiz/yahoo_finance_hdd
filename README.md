@@ -74,7 +74,7 @@ dividends_df = yf.get_dividends(params)
 splits_df = yf.get_splits(params)
 ```
 ### Returned Data
-![alt text](https://github.com/sdiz/yahoo_finance_hdd.git/return_example.JPG "returned data example")
+![alt text](https://github.com/sdiz/yahoo_finance_hdd/blob/master/return_example.JPG "returned data example")
 
 ## Authors
 
