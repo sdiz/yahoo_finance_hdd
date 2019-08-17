@@ -2,12 +2,12 @@ from distutils.core import setup
 setup(
   name = 'yahoo_finance_hdd',         
   packages = ['yahoo_finance_hdd'],   
-  version = '0.1',      
+  version = '0.2',      
   license='MIT',        
   description = 'Download historical financial data from yahoo finance',   
   author = 'Serkan Dizbay',                   
   url = 'https://github.com/sdiz/yahoo_finance_hdd.git',   
-  download_url = 'https://github.com/sdiz/yahoo_finance_hdd/archive/v_0.1.tar.gz',
+  download_url = 'https://github.com/sdiz/yahoo_finance_hdd/archive/v_0.2.tar.gz',
   keywords = ['financial data', 'yahoo finance'],  
   install_requires=[            
           'numpy',
