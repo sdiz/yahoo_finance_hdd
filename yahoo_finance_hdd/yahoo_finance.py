@@ -51,7 +51,6 @@ from datetime import datetime
 from time import mktime
 from yahoo_finance_hdd.exchange_calendars import ExchangeCalendar
 
-
 class Connection:
     """
     Abstract base class specifying methods to be implemented
@@ -139,14 +138,14 @@ class Session(Connection):
         str
            an alphanumeric code which is used when making requests
         """
-        self.response = self.session.get(self.CRUM_STR)
-        self.response.raise_for_status()
-        self.message = re.search(r'CrumbStore":{"crumb":"(.*?)"}', self.response.text)
+        response = self.session.get(self.CRUM_STR)
+        response.raise_for_status()
+        message = re.search(r'CrumbStore":{"crumb":"(.*?)"}', response.text)
 
-        if not self.message:
+        if not message:
             raise ValueError('Could not get crumb from Yahoo Finance')
         else:
-            return self.message.group(1)
+            return message.group(1)
 
     def get_session(self):
         """ Get session object """
@@ -198,10 +197,10 @@ class Download:
             the fetched data
         """
 
-        self.response = self.session.get(url)
-        self.response.raise_for_status()
+        response = self.session.get(url)
+        response.raise_for_status()
 
-        return pd.read_csv(StringIO(self.response.text), error_bad_lines=False).replace('null', np.nan).dropna()
+        return pd.read_csv(StringIO(response.text), error_bad_lines=False).replace('null', np.nan).dropna()
 
     def _download_thread(self, identifier):
         """
@@ -222,16 +221,16 @@ class Download:
         """
 
         # a pool of workers
-        self.pool = ThreadPool(4)
+        pool = ThreadPool(4)
 
         # get data for each ticker in thread and return results
-        self.results = self.pool.starmap(self._get_single_ticker, zip(self.params.tickers, itertools.repeat(identifier)))
+        results = pool.starmap(self._get_single_ticker, zip(self.params.tickers, itertools.repeat(identifier)))
 
         # close the pool and wait for threads to finish
-        self.pool.close()
-        self.pool.join()
+        pool.close()
+        pool.join()
 
-        return self.results
+        return results
 
     def _get_single_ticker(self, ticker, identifier):
         """
@@ -254,16 +253,16 @@ class Download:
         """
 
         # convert dates to unix
-        self.start_unix = Date.convert_to_unix(self.params.start)
-        self.end_unix = Date.convert_to_unix(self.params.end)
+        start_unix = Date.convert_to_unix(self.params.start)
+        end_unix = Date.convert_to_unix(self.params.end)
 
         # get data
-        self.output = self._get_url(self.URL_STR % (ticker, self.start_unix, self.end_unix, '1d', identifier, self.crumb))
+        output = self._get_url(self.URL_STR % (ticker, start_unix, end_unix, '1d', identifier, self.crumb))
 
         # set name of index column to ticker name
-        self.output.index.name = ticker
+        output.index.name = ticker
 
-        return self.output
+        return output
 
     def get_multiple_tickers(self, identifier):
         """
@@ -289,34 +288,34 @@ class Download:
             self.params.columns.insert(0, 'Date')
 
         # transform tickers
-        self.tickers = Tickers.transform(self.params.tickers)
+        self.params.tickers = Tickers.transform(self.params.tickers)
 
         # get dates from trading calendar
-        self.output_df = ExchangeCalendar(self.params.start, self.params.end, self.params.exchange).get_dates(self.params.interval)
+        output_df = ExchangeCalendar(self.params.start, self.params.end, self.params.exchange).get_dates(self.params.interval)
 
        # get data for each ticker in thread and return results
-        self.results = self._download_thread(identifier)
+        results = self._download_thread(identifier)
 
         # merge dataframes
-        for result in self.results:
+        for result in results:
 
             if identifier == 'history':
-                self.data_df = result[self.params.columns]
+                data_df = result[self.params.columns]
             else:
-                self.data_df = result
+                data_df = result
 
             # rename columns
-            for column in self.data_df.columns:
+            for column in data_df.columns:
                 if column != 'Date':
-                    self.data_df = self.data_df.rename(columns={column: column + "_" + self.data_df.index.name})
+                    data_df = data_df.rename(columns={column: column + "_" + data_df.index.name})
 
             # merge data series with dates
-            self.output_df = pd.merge(self.output_df, self.data_df, how='left', on='Date')
+            output_df = pd.merge(output_df, data_df, how='left', on='Date')
 
         # make date column index
-        self.output_df = self.output_df.set_index('Date')
+        output_df = output_df.set_index('Date')
 
-        return self.output_df.dropna(how='all')
+        return output_df.dropna(how='all')
 
 
 
@@ -428,3 +427,4 @@ class YahooFinance:
         """
 
         return Download(self.session, params).get_multiple_tickers('split')
+

@@ -4,14 +4,14 @@ from yahoo_finance_hdd import YahooFinance, Parameters
 params = Parameters(
             start = '2010-12-01',
             end = '2019-08-20',
-            tickers = ['AAPL', 'VZ', 'JPM'],
+            tickers = ['AAPL', 'IBM'],
             interval = 'w',
             exchange = 'NYSE',
-            columns = ['Close', 'Adj Close']
+            columns = ['Close', 'Low']
         )
 
 # e.g change interval to daily
-params.interval = 'd'
+params.interval = 'm'
 
 # create new yahoo finance instance
 yf = YahooFinance()

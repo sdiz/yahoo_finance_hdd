@@ -23,6 +23,7 @@ df3 = ExchangeCalendar('2012-12-01', '2019-04-14', 'NYSE').get_dates('m')
 ########################
 import pandas_market_calendars as tcal
 import pandas as pd
+import datetime
 
 class ExchangeCalendar:
     """
@@ -101,8 +102,9 @@ class ExchangeCalendar:
     class Weekly():
 
         @staticmethod
-        def day_of_week_num(dts):
-            return (dts.astype('datetime64[D]').view('int64') - 4) % 7
+        def day_of_week_num(date):
+            # return (date.astype('datetime64[D]').view('int64') - 4) % 7
+            return datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
 
         def _get_weekly_dates(self, daily_dr):
             return [previous_date for current_date, previous_date in zip(daily_dr, daily_dr[1:])
