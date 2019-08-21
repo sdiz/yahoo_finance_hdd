@@ -2,8 +2,8 @@
 
 Download historical price, dividends and stock splits data from yahoo finance in python.
 
-- Current Version: v_0.2.1
-- Version Released: 2019-08-17
+- Current Version: v_0.2.2
+- Version Released: 2019-08-21
 - Report any bugs by opening an issue here: https://github.com/sdiz/yahoo_finance_hdd/issues
 
 ## Installation
