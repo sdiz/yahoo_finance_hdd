@@ -1,11 +1,11 @@
 Metadata-Version: 2.1
 Name: yahoo-finance-hdd
-Version: 0.2.1
+Version: 0.2.2
 Summary: Download historical financial data from yahoo finance
 Home-page: https://github.com/sdiz/yahoo_finance_hdd.git
 Author: Serkan Dizbay
 License: MIT
-Download-URL: https://github.com/sdiz/yahoo_finance_hdd/archive/v_0.2.1.tar.gz
+Download-URL: https://github.com/sdiz/yahoo_finance_hdd/archive/v_0.2.2.tar.gz
 Description: # Yahoo Finance Historical Data Downloader
         
         Download historical price, dividends and stock splits data from yahoo finance in python.
